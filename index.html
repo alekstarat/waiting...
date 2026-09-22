@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Отсчёт до 27 сентября</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: #050508;
+      font-family: 'Inter', sans-serif;
+      color: #ffffff;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Animated background particles — space / void */
+    .particles {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.55);
+      border-radius: 50%;
+      animation: float 18s infinite linear;
+    }
+
+    @keyframes float {
+      0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+      10%  { opacity: 0.7; }
+      90%  { opacity: 0.7; }
+      100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      max-width: 900px;
+    }
+
+    h1 {
+      font-weight: 200;
+      font-size: clamp(1.6rem, 5vw, 2.6rem);
+      letter-spacing: 0.35em;
+      margin-bottom: 0.6rem;
+      color: #ffffff;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      font-weight: 200;
+      font-size: 1rem;
+      opacity: 0.55;
+      margin-bottom: 3.2rem;
+      letter-spacing: 0.12em;
+      color: #ffffff;
+    }
+
+    .countdown {
+      display: flex;
+      justify-content: center;
+      gap: clamp(1rem, 4vw, 2.2rem);
+      flex-wrap: wrap;
+      margin-bottom: 2.8rem;
+    }
+
+    .unit {
+      background: transparent;
+      border: none;
+      padding: 0.6rem 0.4rem;
+      min-width: 90px;
+    }
+
+    .number {
+      font-weight: 200;
+      font-size: clamp(2.4rem, 8vw, 4.2rem);
+      line-height: 1;
+      color: #ffffff;
+      letter-spacing: 0.05em;
+    }
+
+    .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      opacity: 0.4;
+      margin-top: 0.7rem;
+      font-weight: 300;
+      color: #ffffff;
+    }
+
+    .total-seconds {
+      font-weight: 200;
+      font-size: clamp(0.95rem, 2.8vw, 1.25rem);
+      color: #ffffff;
+      opacity: 0.6;
+      margin-top: 0.5rem;
+      letter-spacing: 0.08em;
+    }
+
+    .total-seconds span {
+      font-weight: 300;
+      opacity: 1;
+    }
+
+    .message {
+      margin-top: 2.8rem;
+      font-size: 3.4rem;
+      line-height: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .pill {
+      display: inline-block;
+      animation: pill-float 2.4s ease-in-out infinite;
+      filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.3));
+      user-select: none;
+    }
+
+    @keyframes pill-float {
+      0%, 100% {
+        transform: translateY(0) rotate(-8deg) scale(1);
+      }
+      25% {
+        transform: translateY(-12px) rotate(5deg) scale(1.1);
+      }
+      50% {
+        transform: translateY(-3px) rotate(-4deg) scale(1.03);
+      }
+      75% {
+        transform: translateY(-14px) rotate(7deg) scale(1.12);
+      }
+    }
+
+    .finished {
+      display: none;
+      font-weight: 200;
+      font-size: 2rem;
+      color: #ffffff;
+      letter-spacing: 0.15em;
+      animation: fade-pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes fade-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    @media (max-width: 600px) {
+      .unit {
+        min-width: 70px;
+      }
+      .label {
+        font-size: 0.6rem;
+      }
+      h1 {
+        letter-spacing: 0.2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="particles" id="particles"></div>
+
+  <div class="container">
+    <p class="subtitle">до возвращения 💞🧸❣Дарины❤️‍🔥🌌💋
+</p>
+
+    <div class="countdown" id="countdown">
+      <div class="unit">
+        <div class="number" id="days">00</div>
+        <div class="label">дней</div>
+      </div>
+      <div class="unit">
+        <div class="number" id="hours">00</div>
+        <div class="label">часов</div>
+      </div>
+      <div class="unit">
+        <div class="number" id="minutes">00</div>
+        <div class="label">минут</div>
+      </div>
+      <div class="unit">
+        <div class="number" id="seconds">00</div>
+        <div class="label">секунд</div>
+      </div>
+    </div>
+
+    <div class="total-seconds">
+      Всего секунд: <span id="total-sec">0</span>
+    </div>
+
+    <div class="message" id="message">
+      <span class="pill">💊</span>
+    </div>
+    <div class="finished" id="finished">Время пришло</div>
+  </div>
+
+  <script>
+    // Target: 27 September 2026, 11:00:00 UTC+3
+    const targetDate = new Date('2026-09-27T11:00:00+03:00').getTime();
+
+    function updateCountdown() {
+      const now = Date.now();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        document.getElementById('countdown').style.display = 'none';
+        document.getElementById('total-sec').parentElement.style.display = 'none';
+        document.getElementById('message').style.display = 'none';
+        document.getElementById('finished').style.display = 'block';
+        return;
+      }
+
+      const totalSeconds = Math.floor(diff / 1000);
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      document.getElementById('days').textContent = String(days).padStart(2, '0');
+      document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+      document.getElementById('total-sec').textContent = totalSeconds.toLocaleString('ru-RU');
+    }
+
+    // Create floating particles (stars in the void)
+    function createParticles() {
+      const container = document.getElementById('particles');
+      for (let i = 0; i < 55; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.animationDelay = Math.random() * 18 + 's';
+        p.style.animationDuration = (12 + Math.random() * 20) + 's';
+        const size = 1 + Math.random() * 2.5;
+        p.style.width = p.style.height = size + 'px';
+        p.style.opacity = 0.3 + Math.random() * 0.5;
+        container.appendChild(p);
+      }
+    }
+
+    createParticles();
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
